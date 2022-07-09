@@ -1,6 +1,7 @@
-from flask import send_from_directory
 import requests
+from flask import send_from_directory
 from openpyxl import load_workbook
+from openpyxl.chart import LineChart, Reference
 
 
 def weather(city):
@@ -23,18 +24,13 @@ def process_xl(filename):
 
     sheet_1 = wb['Sheet1']
     sheet_2 = wb['Sheet2']
-
     city_1 = sheet_1['A1'].value
     city_2 = sheet_2['A1'].value
-
     city_1 = str(city_1)
     city_2 = str(city_2)
-
     sheet_1['C1'] = weather(city_1)
     sheet_2['C1'] = weather(city_2)
 
     wb.save(filename=filename)
     return send_from_directory('static/files/', 'TestXl.xlsx')
 
-
-    
